@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+reset() {
+	pushd .. >/dev/null 2>&1
+	repo sync -q -l --force-sync "$1"
+	popd >/dev/null 2>&1
+}
+
+apply() {
+	echo -e "\033[33mApplying patches for project: $1\033[0m"
+	for i in `ls -1 "$1/"*.patch | sort -V`; do git -C "../$1" am "$PWD/$i"; done;
+	echo
+}
+
+pushd `dirname "$0"` >/dev/null 2>&1
+
+reset	"frameworks/base"
+# reset	"system/core"
+reset	"build/make"
+reset	"bionic"
+reset	"device/motorola/sanders"
+reset	"kernel/motorola/msm8953"
+reset	"frameworks/av"
+reset	"frameworks/native"
+reset	"art"
+
+apply	"frameworks/base"
+# apply	"system/core"
+apply	"build/make"
+apply	"bionic"
+apply	"device/motorola/sanders"
+apply	"kernel/motorola/msm8953"
+apply	"frameworks/av"
+apply	"frameworks/native"
+apply	"art"
+
+popd >/dev/null 2>&1
