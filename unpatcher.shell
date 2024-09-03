@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 reset() {
-        echo -e "\e[33mResetting repo: $1\e[0m"
+        echo -e "\e[33mResetting repo: $1\e[0m]"
 	pushd .. >/dev/null 2>&1
 	repo sync -q -l --force-sync "$1"
 	popd >/dev/null 2>&1
